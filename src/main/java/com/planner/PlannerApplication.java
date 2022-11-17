@@ -1,4 +1,4 @@
-package com.example.planner;
+package com.planner;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,11 +7,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class PlannerApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1100, 700);
+        FXMLLoader fxmlLoader = new FXMLLoader(PlannerApplication.class.getResource("main.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Planner");
         stage.setScene(scene);
         stage.show();

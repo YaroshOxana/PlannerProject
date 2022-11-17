@@ -1,8 +1,8 @@
-module com.example.planner {
+module com.planner {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.jfoenix;
 
-
-    opens com.example.planner to javafx.fxml;
-    exports com.example.planner;
+    opens com.planner to javafx.fxml;
+    exports com.planner;
 }
