@@ -3,7 +3,9 @@
 }
 .label{
 	-fx-text-fill: #610000;
-	-fx-font-family: "Courier";
+	-fx-font-family: "Serif";
+	-fx-font-size: 20;
+	-fx-alignment: center;
 }
 .button{
 	-fx-background-color: #314a46;
@@ -12,6 +14,8 @@
 	-fx-pref-height: 50;
 	-fx-pref-width: 100;
 	-fx-text-fill: #b79f87;
+	-fx-font-family: "Serif";
+	-fx-font-size: 20;
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
 }
 date-picker {
