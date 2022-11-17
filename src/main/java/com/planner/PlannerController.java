@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.cell.CheckBoxListCell;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +18,14 @@ public class PlannerController implements Initializable {
     @FXML
     private JFXListView<Task> tasksListView;
 
-    private List<Task> tasks;
+    public static List<Task> tasks;
+    private Task selectedTask;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tasks = new ArrayList<>();
-        CheckBoxListCell cell = new CheckBoxListCell();
-
+//        tasks = new ArrayList<>();
+//        CheckBoxListCell cell = new CheckBoxListCell();
+//
 //        Task task = new Task("Hello",2);
 //        Task task1 = new Task("Worlds", 1);
 //        Task task2 = new Task("Hehe", 1);
@@ -34,30 +36,50 @@ public class PlannerController implements Initializable {
 //        tasks.add(task2);
 //        tasks.add(task3);
 //
-//        tasksListView.getItems().add(task);
-//        tasksListView.getItems().add(task1);
-//        tasksListView.getItems().add(task2);
-//        tasksListView.getItems().add(task3);
-//        refreshAndSortTasksListView();
+//        tasksListView.getItems().addAll(tasks);
+//        sortTasksListByPriority(tasks);
+//        refreshTasksListView();
+
+
+//        // Reading data
+//        try {
+//            Data data1 = Data.readData();
+//            tasks = data1.getTasks();
+//            Task.setTextToAllTasksInList(tasks);
+//            refreshTasksListView();
+//        }
+//        catch (IOException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
         tasksListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
             @Override
-            public void changed(ObservableValue<? extends Task> observableValue, Task task, Task selectedTask) {
-                var currentTask = selectedTask;
-                System.out.println(currentTask.getPriority());
+            public void changed(ObservableValue<? extends Task> observableValue, Task task, Task currentTask) {
+                selectedTask = currentTask;
             }
         });
+    }
 
+    public void addTask() {
 
     }
 
-    public void refreshAndSortTasksListView(){
+    public void editTask() {
+
+    }
+
+    public void deleteTask() {
+        tasks.remove(selectedTask);
+        refreshTasksListView();
+    }
+
+    public void refreshTasksListView(){
         if (tasksListView.getItems() == null)
             return;
-        sortTasksListByPriority(tasks);
+
         tasksListView.getItems().clear();
-        for (var song : tasks)
-            tasksListView.getItems().add(song);
+        for (var task : tasks)
+            tasksListView.getItems().add(task);
     }
 
     private void sortTasksListByPriority(List<Task> tasks){

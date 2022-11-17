@@ -15,9 +15,9 @@
             <JFXListView fx:id="tasksListView" layoutX="88.0" layoutY="86.0" prefHeight="554.0" prefWidth="315.0" />
             <Label layoutX="88.0" layoutY="52.0" prefHeight="23.0" prefWidth="315.0" text="Day" />
             <Label alignment="CENTER" layoutX="472.0" layoutY="402.0" prefHeight="23.0" prefWidth="140.0" text="Priority" />
-            <JFXButton layoutX="570.0" layoutY="136.0" text="Add" />
-            <JFXButton layoutX="570.0" layoutY="206.0" text="Edit" />
-            <JFXButton layoutX="570.0" layoutY="286.0" text="Delete" />
+            <JFXButton layoutX="570.0" layoutY="136.0" onAction="#addTask" text="Add" />
+            <JFXButton layoutX="570.0" layoutY="206.0" onAction="#editTask" text="Edit" />
+            <JFXButton layoutX="570.0" layoutY="286.0" onAction="#deleteTask" text="Delete" />
             <JFXSlider layoutX="472.0" layoutY="435.0" />
             <JFXButton layoutX="570.0" layoutY="589.0" text="Close" />
             <JFXButton layoutX="719.0" layoutY="44.0" text="Default" />
