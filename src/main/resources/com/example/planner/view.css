@@ -1,0 +1,96 @@
+.root {
+	-fx-background-color: #b79f87;
+}
+.label{
+	-fx-text-fill: #610000;
+	-fx-font-family: "Courier";
+}
+.button{
+	-fx-background-color: #314a46;
+	-fx-background-radius: 30;
+	-fx-background-insets: 0;
+	-fx-pref-height: 50;
+	-fx-pref-width: 100;
+	-fx-text-fill: #b79f87;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+}
+date-picker {
+	-fx-focus-color: #610000;
+}
+
+.date-picker .arrow-button {
+	-fx-background-color: #314a46;
+	-fx-background-radius: 0;
+}
+.date-picker .arrow-button:hover {
+	-fx-background-color: #610000;
+}
+.date-picker .arrow-button .arrow {
+	-fx-background-color: white;
+}
+.date-picker .cell {
+	-fx-background-color: white;
+}
+.date-picker .cell:hover {
+	-fx-background-color: #b79f87;
+}
+.date-picker .cell:focused {
+	-fx-background-color: #b79f87;
+}
+.date-picker .selected {
+	-fx-background-color: #314a46;
+	-fx-text-fill: white;
+}
+.date-picker .selected:focused {
+	-fx-background-color: #314a46;
+	-fx-text-fill: white;
+}
+.date-picker-popup  {
+	-fx-border-color: transparent;
+}
+.date-picker-popup .month-year-pane {
+	-fx-background-color: #314a46;
+}
+.date-picker-popup .month-year-pane .label {
+	-fx-text-fill: white;
+}
+.date-picker-popup .week-number-cell {
+	-fx-text-fill: #610000;
+}
+.date-picker-popup .spinner .button .left-arrow,
+.date-picker-popup .spinner .button .right-arrow {
+	-fx-background-color: white;
+}
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+	-fx-background-color: #314a46;
+}
+.list-cell:odd { -fx-background-color: white;}
+.list-cell:even {-fx-background-color: #b79f87;}
+.list-cell:filled:hover{
+	-fx-background-color: #610000;
+}
+.check-box .label{
+	-fx-text-fill: #000000;
+}
+.check-box .box {
+	-fx-background-color:#b79f87;
+	-fx-border-color:#610000
+}
+.jfx-slider>.track {
+    -fx-pref-height: 10;
+}
+
+/* Styling the slider thumb */
+.jfx-slider>.thumb {
+    -fx-background-color: #314a46;
+}
+
+/* Styling the filled track */
+.jfx-slider>.colored-track {
+    -fx-background-color: #314a46;
+    }
+
+/* Styling the animated thumb */
+.jfx-slider>.animated-thumb {
+    -fx-background-color:transparent;
+}
