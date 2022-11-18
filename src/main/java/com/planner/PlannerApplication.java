@@ -26,13 +26,9 @@ public class PlannerApplication extends Application {
                 Data data = new Data(PlannerController.tasks);
                 try {
                     Data.writeData(data, PlannerController.path);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
                     Data.saveDate(PlannerController.path);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
                 Platform.exit();
                 System.exit(0);
