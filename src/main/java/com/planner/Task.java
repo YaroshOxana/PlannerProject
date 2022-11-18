@@ -1,11 +1,11 @@
 package com.planner;
 
-import javafx.scene.control.CheckBox;
+import com.jfoenix.controls.JFXCheckBox;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class Task extends CheckBox implements Serializable {
+public class Task extends JFXCheckBox implements Serializable {
 
     private int priority;
     private String text;
@@ -20,7 +20,7 @@ public class Task extends CheckBox implements Serializable {
         return priority;
     }
 
-    private String getRealText() {
+    public String getRealText() {
         return text;
     }
 

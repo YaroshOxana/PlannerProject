@@ -15,6 +15,7 @@ public class PlannerApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(PlannerApplication.class.getResource("main.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        scene.getStylesheets().add(getClass().getResource(Data.readTheme()).toExternalForm());
         stage.setTitle("Planner");
         stage.setScene(scene);
         stage.show();
@@ -24,9 +25,14 @@ public class PlannerApplication extends Application {
             public void handle(WindowEvent windowEvent) {
                 Data data = new Data(PlannerController.tasks);
                 try {
-                    Data.writeData(data);
+                    Data.writeData(data, PlannerController.path);
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+                try {
+                    Data.saveDate(PlannerController.path);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
                 Platform.exit();
                 System.exit(0);

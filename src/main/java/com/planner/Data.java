@@ -2,6 +2,7 @@ package com.planner;
 
 import java.io.*;
 import java.util.List;
+import java.util.Scanner;
 
 public class Data implements Serializable {
     private List<Task> tasks;
@@ -14,8 +15,8 @@ public class Data implements Serializable {
         return tasks;
     }
 
-    public static void writeData(Data savedData) throws IOException {
-        FileOutputStream f = new FileOutputStream(new File("savedData.bin"));
+    public static void writeData(Data savedData, String path) throws IOException {
+        FileOutputStream f = new FileOutputStream(new File(path+".bin"));
         ObjectOutputStream o = new ObjectOutputStream(f);
 
         o.writeObject(savedData);
@@ -23,8 +24,8 @@ public class Data implements Serializable {
         f.close();
     }
 
-    public static Data readData() throws IOException, ClassNotFoundException {
-        FileInputStream fi = new FileInputStream(new File("savedData.bin"));
+    public static Data readData(String path) throws IOException, ClassNotFoundException {
+        FileInputStream fi = new FileInputStream(new File(path+".bin"));
         ObjectInputStream oi = new ObjectInputStream(fi);
 
         Data readData = (Data) oi.readObject();
@@ -32,5 +33,35 @@ public class Data implements Serializable {
         fi.close();
 
         return readData;
+    }
+    public static void saveDate(String date) throws IOException {
+        File file = new File("C:\\Users\\Oksana\\IdeaProjects\\Planner\\date.txt");
+        FileWriter fr = new FileWriter(file);
+        fr.write(date);
+
+        fr.close();
+    }
+    public static String readDate() throws FileNotFoundException {
+        File file = new File("C:\\Users\\Oksana\\IdeaProjects\\Planner\\date.txt");
+        Scanner scan = new Scanner(file);
+        String date = scan.nextLine();
+        scan.close();
+
+        return date;
+    }
+    public static void saveTheme(String theme) throws IOException {
+        File file = new File("C:\\Users\\Oksana\\IdeaProjects\\Planner\\theme.txt");
+        FileWriter fr = new FileWriter(file);
+        fr.write(theme);
+
+        fr.close();
+    }
+    public static String readTheme() throws FileNotFoundException {
+        File file = new File("C:\\Users\\Oksana\\IdeaProjects\\Planner\\theme.txt");
+        Scanner scan = new Scanner(file);
+        String theme = scan.nextLine();
+        scan.close();
+
+        return theme;
     }
 }

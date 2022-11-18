@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDialog?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import javafx.scene.control.DatePicker?>
@@ -8,22 +9,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" stylesheets="@view.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planner.PlannerController">
+<StackPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planner.PlannerController">
    <children>
-      <AnchorPane prefHeight="700.0" prefWidth="1100.0" stylesheets="@view.css">
+      <AnchorPane prefHeight="700.0" prefWidth="1100.0">
          <children>
             <JFXListView fx:id="tasksListView" layoutX="88.0" layoutY="86.0" prefHeight="554.0" prefWidth="315.0" />
-            <Label layoutX="88.0" layoutY="52.0" prefHeight="23.0" prefWidth="315.0" text="Day" />
-            <Label alignment="CENTER" layoutX="472.0" layoutY="402.0" prefHeight="23.0" prefWidth="140.0" text="Priority" />
+            <Label fx:id="dateLabel" layoutX="88.0" layoutY="52.0" prefHeight="23.0" prefWidth="315.0" text="Day" />
+            <Label fx:id="priorityLabel" alignment="CENTER" layoutX="472.0" layoutY="402.0" prefHeight="23.0" prefWidth="140.0" text="Priority" />
             <JFXButton layoutX="570.0" layoutY="136.0" onAction="#addTask" text="Add" />
             <JFXButton layoutX="570.0" layoutY="206.0" onAction="#editTask" text="Edit" />
             <JFXButton layoutX="570.0" layoutY="286.0" onAction="#deleteTask" text="Delete" />
-            <JFXSlider layoutX="472.0" layoutY="435.0" />
-            <JFXButton layoutX="570.0" layoutY="589.0" text="Close" />
-            <JFXButton layoutX="719.0" layoutY="44.0" text="Default" />
-            <JFXButton layoutX="844.0" layoutY="44.0" text="Black" />
-            <JFXButton layoutX="965.0" layoutY="44.0" text="White" />
-            <DatePicker layoutX="454.0" layoutY="48.0" />
+            <JFXSlider fx:id="prioritySlider" blockIncrement="1.0" layoutX="472.0" layoutY="435.0" majorTickUnit="1.0" max="5.0" min="1.0" minorTickCount="1" onMouseReleased="#priority" showTickLabels="true" showTickMarks="true" value="5.0" />
+            <JFXButton layoutX="570.0" layoutY="589.0" onAction="#close" text="Close" />
+            <JFXButton layoutX="719.0" layoutY="44.0" onAction="#defaultTheme" text="Default" />
+            <JFXButton layoutX="844.0" layoutY="44.0" onAction="#blackTheme" text="Black" />
+            <JFXButton layoutX="965.0" layoutY="44.0" onAction="#whiteTheme" text="White" />
+            <DatePicker fx:id="datePicker" layoutX="454.0" layoutY="48.0" onAction="#changeDate" />
+            <JFXDialog fx:id="jfxDialog" />
          </children>
       </AnchorPane>
    </children>

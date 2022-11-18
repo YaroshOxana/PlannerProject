@@ -1,31 +1,72 @@
 package com.planner;
 
-import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.*;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.CheckBoxListCell;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.time.LocalDate;
+import java.util.*;
 
 public class PlannerController implements Initializable {
 
     @FXML
+    private StackPane pane;
+    @FXML
     private JFXListView<Task> tasksListView;
+    @FXML
+    private Label priorityLabel;
+    @FXML
+    private JFXSlider prioritySlider;
+    @FXML
+    private JFXDialog jfxDialog;
+    @FXML
+    private DatePicker datePicker;
+    @FXML
+    private Label dateLabel;
+
+    private Stage stage;
+    private Scene scene;
 
     public static List<Task> tasks;
     private Task selectedTask;
 
+    public static String path;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        tasks = new ArrayList<>();
-//        CheckBoxListCell cell = new CheckBoxListCell();
-//
+        tasks = new ArrayList<>();
+
+        datePicker.setOnMouseEntered(value-> {
+            Data data = new Data(tasks);
+            System.out.println("Enter" + path);
+            try {
+                Data.writeData(data, path);
+            } catch (IOException e) {
+                System.out.println("No Data Written");
+            }
+        });
+
+        readAllData();
+
+        //CheckBoxListCell cell = new CheckBoxListCell();
+
 //        Task task = new Task("Hello",2);
 //        Task task1 = new Task("Worlds", 1);
 //        Task task2 = new Task("Hehe", 1);
@@ -41,16 +82,16 @@ public class PlannerController implements Initializable {
 //        refreshTasksListView();
 
 
-//        // Reading data
-//        try {
-//            Data data1 = Data.readData();
-//            tasks = data1.getTasks();
-//            Task.setTextToAllTasksInList(tasks);
-//            refreshTasksListView();
-//        }
-//        catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        // Reading data
+ //       try {
+ //           Data data1 = Data.readData();
+ //           tasks = data1.getTasks();
+ //           Task.setTextToAllTasksInList(tasks);
+ //           refreshTasksListView();
+ //       }
+ //       catch (IOException | ClassNotFoundException e) {
+ //           e.printStackTrace();
+        //      }
 
         tasksListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
             @Override
@@ -59,16 +100,142 @@ public class PlannerController implements Initializable {
             }
         });
     }
+    public void writeAllData()
+    {
+        Data data = new Data(tasks);
+        try {
+            Data.writeData(data, path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            Data.saveDate(path);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void readAllData()
+    {
+        try {
+            path = Data.readDate();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        datePicker.setValue(LocalDate.parse(path));
+        setDate();
+        try {
+            Data data1 = Data.readData(path);
+            for (Task x: data1.getTasks())
+                x.setOnAction(value->TaskIsDone(x));
+            tasks = data1.getTasks();
+            Task.setTextToAllTasksInList(tasks);
+            refreshTasksListView();
+        }
+        catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public void showDialog(String information)
+    {
+        Text textHeader = new Text();
+        textHeader.setFill(Color.color(0.38,0,0));
+        textHeader.setText("Something went wrong");
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setHeading(textHeader);
+        Text text = new Text();
+        text.setFill(Color.color(0.38,0,0));
+        text.setText(information);
+        layout.setBody(text);
+        jfxDialog = new JFXDialog(pane, layout, JFXDialog.DialogTransition.CENTER);
+        JFXButton button = new JFXButton("Ok");
+        button.setOnAction(value->jfxDialog.close());
+        layout.setActions(button);
+        jfxDialog.show();
+    }
+    public void priority() {
+        if (selectedTask == null)
+        {
+            showDialog("Choose item");
+            return;
+        }
+        if (selectedTask.isSelected())
+        {
+            showDialog("Choose unchecked item");
+            return;
+        }
+        selectedTask.setPriority((int)prioritySlider.getValue());
+        priorityLabel.setText("Priority: " + Integer.toString((int)prioritySlider.getValue()));
+        sortTasksListByPriority(tasks);
+        refreshTasksListView();
+    }
+    public void TaskIsDone(Task task)
+    {
+        if(task.isSelected()) {
+            task.setPriority(6);
+        }
+        else{
+            task.setPriority(5);
+        }
+        sortTasksListByPriority(tasks);
+        refreshTasksListView();
 
+    }
+    public String setTaskName(String action) throws FileNotFoundException {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setHeaderText(action);
+        dialog.initStyle(StageStyle.UNDECORATED);
+        dialog.setGraphic(null);
+        dialog.getDialogPane().setPrefWidth(350);
+        dialog.getDialogPane().setPrefHeight(150);
+        dialog.getDialogPane().getStylesheets().add(getClass().getResource(Data.readTheme()).toExternalForm());
+        Optional<String> result = dialog.showAndWait();
+        return result.get();
+    }
     public void addTask() {
+        String taskName;
+        try{
+            taskName = setTaskName("Enter your task:");
+        }catch(NoSuchElementException | FileNotFoundException e) {
+            System.out.println("No value present");
+            return;
+        }
+        Task task = new Task(taskName, 5);
+        task.setOnAction(value->TaskIsDone(task));
+        tasks.add(task);
 
+        tasksListView.getItems().clear();
+        tasksListView.getItems().addAll(tasks);
+
+        sortTasksListByPriority(tasks);
+        refreshTasksListView();
     }
 
     public void editTask() {
-
+        String taskName;
+        try{
+            selectedTask.setPriority((int)prioritySlider.getValue());
+        }catch(NullPointerException e) {
+            showDialog("Choose item to edit");
+            return;
+        }
+        try{
+            taskName = setTaskName("Edit task '" + selectedTask.getRealText() + "'");
+        }catch(NoSuchElementException | FileNotFoundException e) {
+            System.out.println("No value present");
+            return;
+        }
+        selectedTask.setText(taskName);
+        refreshTasksListView();
     }
 
     public void deleteTask() {
+
+        try{
+            selectedTask.setPriority((int)prioritySlider.getValue());
+        }catch(NullPointerException e) {
+            showDialog("Choose item to delete");
+            return;
+        }
         tasks.remove(selectedTask);
         refreshTasksListView();
     }
@@ -83,6 +250,65 @@ public class PlannerController implements Initializable {
     }
 
     private void sortTasksListByPriority(List<Task> tasks){
-        tasks.sort((task1, task2)->(task1.getPriority() < task2.getPriority())?1:-1);
+        tasks.sort((task1, task2)->(task1.getPriority() >= task2.getPriority())?1:-1);
+    }
+    public void changeTheme(String source) throws IOException {
+        pane = FXMLLoader.load(getClass().getResource("main.fxml"));
+        stage = (Stage)tasksListView.getScene().getWindow();
+        scene = new Scene(pane);
+        scene.getStylesheets().add(getClass().getResource(source).toExternalForm());
+        stage.setTitle("Planner");
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void defaultTheme() throws IOException {
+        writeAllData();
+        changeTheme("view.css");
+        Data.saveTheme("view.css");
+        readAllData();
+    }
+    public void blackTheme() throws IOException {
+        writeAllData();
+        changeTheme("black.css");
+        Data.saveTheme("black.css");
+        readAllData();
+
+    } public void whiteTheme() throws IOException {
+        writeAllData();
+        changeTheme("white.css");
+        Data.saveTheme("white.css");
+        readAllData();
+    }
+
+    public void setDate()
+    {
+        String day = datePicker.getValue().getDayOfWeek().toString() + " "
+                + Integer.toString(datePicker.getValue().getDayOfMonth()) + "-"
+                + Integer.toString(datePicker.getValue().getMonthValue()) + "-"
+                + Integer.toString(datePicker.getValue().getYear());
+        dateLabel.setText(day);
+    }
+    public void changeDate()
+    {
+        tasksListView.getItems().clear();
+        tasks.clear();
+        setDate();
+        path = datePicker.getValue().toString();
+        try {
+            Data data1 = Data.readData(path);
+            tasks = data1.getTasks();
+            Task.setTextToAllTasksInList(tasks);
+            refreshTasksListView();
+        }
+        catch (IOException | ClassNotFoundException e) {
+            System.out.println("File not found");
+            //e.printStackTrace();
+        }
+    }
+    public void close()
+    {
+        writeAllData();
+        Platform.exit();
+        System.exit(0);
     }
 }

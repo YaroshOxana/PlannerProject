@@ -1,33 +1,33 @@
 .root {
-	-fx-background-color: #b79f87;
+	-fx-background-color: #D6CFC7;
 }
 .label{
-	-fx-text-fill: #610000;
+	-fx-text-fill: white;
 	-fx-font-family: "Serif";
 	-fx-font-size: 20;
 	-fx-alignment: center;
 }
 .button{
-	-fx-background-color: #314a46;
+	-fx-background-color: black;
 	-fx-background-radius: 30;
 	-fx-background-insets: 0;
 	-fx-pref-height: 50;
 	-fx-pref-width: 100;
-	-fx-text-fill: #b79f87;
+	-fx-text-fill: white;
 	-fx-font-family: "Serif";
 	-fx-font-size: 20;
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
 }
 date-picker {
-	-fx-focus-color: #610000;
+	-fx-focus-color: white;
 }
 
 .date-picker .arrow-button {
-	-fx-background-color: #314a46;
+	-fx-background-color: black;
 	-fx-background-radius: 0;
 }
 .date-picker .arrow-button:hover {
-	-fx-background-color: #610000;
+	-fx-background-color: white;
 }
 .date-picker .arrow-button .arrow {
 	-fx-background-color: #D6CFC7;
@@ -36,30 +36,31 @@ date-picker {
 	-fx-background-color: #D6CFC7;
 }
 .date-picker .cell:hover {
-	-fx-background-color: #b79f87;
+	-fx-background-color: black;
+	-fx-text-fill:white;
 }
 .date-picker .cell:focused {
-	-fx-background-color: #b79f87;
+	-fx-background-color: black;
 }
 .date-picker .selected {
-	-fx-background-color: #314a46;
+	-fx-background-color: black;
 	-fx-text-fill: #D6CFC7;
 }
 .date-picker .selected:focused {
-	-fx-background-color: #314a46;
+	-fx-background-color: black;
 	-fx-text-fill: #D6CFC7;
 }
 .date-picker-popup  {
 	-fx-border-color: transparent;
 }
 .date-picker-popup .month-year-pane {
-	-fx-background-color: #314a46;
+	-fx-background-color: black;
 }
 .date-picker-popup .month-year-pane .label {
-	-fx-text-fill: #D6CFC7;
+	-fx-text-fill: white;
 }
 .date-picker-popup .week-number-cell {
-	-fx-text-fill: #610000;
+	-fx-text-fill: white;
 }
 .date-picker-popup .spinner .button{
 	-fx-effect: null;
@@ -71,30 +72,36 @@ date-picker {
 	-fx-background-color: #D6CFC7;
 }
 .list-view{
-    -fx-background-color: #b79f87;
-    -fx-border-color: #610000;
+    -fx-background-color: #D6CFC7;
+    -fx-border-color: black;
 }
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
 	-fx-background-color: #D6CFC7;
-	-fx-border-color: #610000;
+	-fx-border-color: black;
 }
-.list-cell:odd { -fx-background-color: #b79f87;}
-.list-cell:even {-fx-background-color: #D6CFC7;}
+.list-cell:odd { -fx-background-color: #D6CFC7;}
+.list-cell:even {-fx-background-color: white;}
 .list-cell:filled:hover{
 	-fx-background-color: #D6CFC7;
 }
 .check-box {
     -fx-font-family: "Serif";
-	-fx-text-fill: #000000;
+	-fx-text-fill: black;
 	-fx-font-size: 14;
 }
 .check-box .box {
-	-fx-background-color:#b79f87;
-	-fx-border-color:#610000
+	-fx-background-color:#D6CFC7;
+	-fx-border-color: white;
 }
 .check-box:selected .box{
-    -fx-background-color:#610000;
+    -fx-background-color: white;
+    -fx-border-color: #D6CFC7;
 }
+
+.jfx-check-box:selected .mark{
+    -fx-border-color: black;
+}
+
 .check-box:selected{
     -fx-text-fill: grey;
 }
@@ -107,12 +114,12 @@ date-picker {
 
 /* Styling the slider thumb */
 .jfx-slider>.thumb {
-    -fx-background-color: #314a46;
+    -fx-background-color: black;
 }
 
 /* Styling the filled track */
 .jfx-slider>.colored-track {
-    -fx-background-color: #314a46;
+    -fx-background-color: black;
     }
 
 /* Styling the animated thumb */
@@ -120,14 +127,13 @@ date-picker {
     -fx-background-color:transparent;
 }
 .jfx-dialog-layout {
-    -fx-background-color: #b79f87;
+    -fx-background-color: #D6CFC7;
     -fx-font-family: "Serif";
     -fx-font-size: 20;
 }
 .dialog-pane {
-     -fx-background-color: #b79f87;
+     -fx-background-color: white;
  }
 .dialog-pane:header *.header-panel{
     -fx-background-color: #D6CFC7;
 }
-
