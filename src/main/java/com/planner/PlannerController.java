@@ -210,6 +210,7 @@ public class PlannerController implements Initializable {
 
         tasksListView.getItems().clear();
         tasksListView.getItems().addAll(tasks);
+        System.out.println(tasks.size());
 
         sortTasksListByPriority(tasks);
         refreshTasksListView();

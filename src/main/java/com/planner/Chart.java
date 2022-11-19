@@ -59,6 +59,7 @@ public class Chart {
 
     public static List<Integer> getProductivityDetails(DatePicker datePicker, List<Task> tasks)
     {
+        boolean fileNotFound;
         List<Integer> productivityDetails = new ArrayList<>();
 
         int currentDayValue = datePicker.getValue().getDayOfWeek().getValue();
@@ -73,6 +74,8 @@ public class Chart {
         {
             System.out.println(year+"-"+month+"-"+day);
             int completedTasks = 0;
+            fileNotFound = false;
+
             try {
                 Data data = Data.readData(year+"-"+month+"-"+day);
                 tasks = data.getTasks();
@@ -80,11 +83,12 @@ public class Chart {
             }
             catch (IOException | ClassNotFoundException e) {
                 System.out.println("File Not Found");
-                tasks.clear();
+                fileNotFound = true;
             }
-            for(Task x : tasks)
-                if(x.isSelected())
-                    completedTasks++;
+            if(!fileNotFound)
+                for(Task x : tasks)
+                    if(x.isSelected())
+                        completedTasks++;
 
             productivityDetails.add(completedTasks);
 
