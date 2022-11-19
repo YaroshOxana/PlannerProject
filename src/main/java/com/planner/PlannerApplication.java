@@ -19,6 +19,7 @@ public class PlannerApplication extends Application {
         stage.setTitle("Planner");
         stage.setScene(scene);
         stage.show();
+        PlannerController.SetStageAndScene(stage, scene);
 
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override

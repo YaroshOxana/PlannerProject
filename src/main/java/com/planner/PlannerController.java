@@ -48,8 +48,8 @@ public class PlannerController implements Initializable {
 
     private XYChart.Series<String, Integer> set;
 
-    private Stage stage;
-    private Scene scene;
+    private static Stage stage;
+    private static Scene scene;
 
     public static List<Task> tasks;
     private Task selectedTask;
@@ -267,14 +267,15 @@ public class PlannerController implements Initializable {
     private void sortTasksListByPriority(List<Task> tasks){
         tasks.sort((task1, task2)->(task1.getPriority() > task2.getPriority())?1:-1);
     }
+    public static void SetStageAndScene(Stage stage, Scene scene){
+        PlannerController.scene = scene;
+        PlannerController.stage = stage;
+    }
+
     public void changeTheme(String source) throws IOException {
-        pane = FXMLLoader.load(getClass().getResource("main.fxml"));
-        stage = (Stage)tasksListView.getScene().getWindow();
-        scene = new Scene(pane);
+        scene.getStylesheets().clear();
         scene.getStylesheets().add(getClass().getResource(source).toExternalForm());
-        stage.setTitle("Planner");
         stage.setScene(scene);
-        stage.show();
     }
     public void defaultTheme() throws IOException {
         writeAllData();
