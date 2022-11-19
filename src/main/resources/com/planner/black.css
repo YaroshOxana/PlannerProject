@@ -19,10 +19,6 @@
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
 }
 
-.text {
-    -fx-fill: green;
-}
-
 date-picker {
 	-fx-focus-color: white;
 }
@@ -141,4 +137,14 @@ date-picker {
  }
 .dialog-pane:header *.header-panel{
     -fx-background-color: #D6CFC7;
+}
+.chart-bar {
+    -fx-bar-fill: black;
+}
+.axis{
+      -fx-tick-label-font-family: "Serif";
+      -fx-tick-label-fill: white;
+}
+.chart-plot-background{
+    -fx-background-color: transparent;
 }

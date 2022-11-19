@@ -4,16 +4,27 @@
 <?import com.jfoenix.controls.JFXDialog?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXSlider?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planner.PlannerController">
+<StackPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="756.0" prefWidth="1422.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.planner.PlannerController">
    <children>
       <AnchorPane prefHeight="700.0" prefWidth="1100.0">
          <children>
             <JFXListView fx:id="tasksListView" layoutX="88.0" layoutY="86.0" prefHeight="554.0" prefWidth="315.0" />
+            <BarChart fx:id="productivityChart" layoutX="711.0" layoutY="112.0" prefHeight="530.0" prefWidth="564.0" title="Productivity">
+              <xAxis>
+                <CategoryAxis label="Day" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis label="Completed Tasks" side="LEFT" />
+              </yAxis>
+            </BarChart>
             <Label fx:id="dateLabel" layoutX="88.0" layoutY="52.0" prefHeight="23.0" prefWidth="315.0" text="Day" />
             <Label fx:id="priorityLabel" alignment="CENTER" layoutX="472.0" layoutY="402.0" prefHeight="23.0" prefWidth="140.0" text="Priority" />
             <JFXButton layoutX="570.0" layoutY="136.0" onAction="#addTask" text="Add" />

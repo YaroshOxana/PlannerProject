@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -41,6 +43,10 @@ public class PlannerController implements Initializable {
     private DatePicker datePicker;
     @FXML
     private Label dateLabel;
+    @FXML
+    private BarChart<String, Integer> productivityChart;
+
+    private XYChart.Series<String, Integer> set;
 
     private Stage stage;
     private Scene scene;
@@ -65,6 +71,21 @@ public class PlannerController implements Initializable {
         });
 
         readAllData();
+
+        set = new XYChart.Series<>();
+
+        set.getData().add(new XYChart.Data<>("Mon", 0));
+        set.getData().add(new XYChart.Data<>("Tues", 0));
+        set.getData().add(new XYChart.Data<>("Wed", 0));
+        set.getData().add(new XYChart.Data<>("Thurs", 0));
+        set.getData().add(new XYChart.Data<>("Fri", 0));
+        set.getData().add(new XYChart.Data<>("Sat", 0));
+        set.getData().add(new XYChart.Data<>("Sun", 0));
+        refreshChart();
+        productivityChart.setAnimated(false);
+        productivityChart.setLegendVisible(false);
+
+
 
         tasksListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Task>() {
             @Override
@@ -99,7 +120,9 @@ public class PlannerController implements Initializable {
         try {
             Data data = Data.readData(path);
             for (Task x: data.getTasks())
-                x.setOnAction(value->TaskIsDone(x));
+                x.setOnAction(value->{
+                    TaskIsDone(x);
+                });
             tasks = data.getTasks();
             Task.reloadAllParameters(tasks);
             refreshTasksListView();
@@ -151,6 +174,13 @@ public class PlannerController implements Initializable {
         }
         sortTasksListByPriority(tasks);
         refreshTasksListView();
+        Data d = new Data(tasks);
+        try {
+            Data.writeData(d, path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        refreshChart();
 
     }
     public String setTaskName(String action) throws FileNotFoundException {
@@ -173,7 +203,9 @@ public class PlannerController implements Initializable {
             return;
         }
         Task task = new Task(taskName, 5);
-        task.setOnAction(value->TaskIsDone(task));
+        task.setOnAction(value-> {
+            TaskIsDone(task);
+        });
         tasks.add(task);
 
         tasksListView.getItems().clear();
@@ -199,6 +231,7 @@ public class PlannerController implements Initializable {
         }
         selectedTask.setText(taskName);
         refreshTasksListView();
+
     }
 
     public void deleteTask() {
@@ -250,6 +283,16 @@ public class PlannerController implements Initializable {
         readAllData();
     }
 
+    public void refreshChart() {
+        productivityChart.getData().clear();
+
+        List<Integer> productivityDetails = Chart.getProductivityDetails(datePicker, tasks);
+
+        for(int i = 0; i < 7; i++)
+            set.getData().get(i).setYValue(productivityDetails.get(i));
+
+        productivityChart.getData().add(set);
+    }
     public void setDate()
     {
         String day = datePicker.getValue().getDayOfWeek().toString() + " "
@@ -266,14 +309,18 @@ public class PlannerController implements Initializable {
         path = datePicker.getValue().toString();
         try {
             Data data = Data.readData(path);
+            for (Task x: data.getTasks())
+                x.setOnAction(value->{
+                    TaskIsDone(x);
+                });
             tasks = data.getTasks();
             Task.reloadAllParameters(tasks);
             refreshTasksListView();
         }
         catch (IOException | ClassNotFoundException e) {
-            System.out.println("File not found");
-            //e.printStackTrace();
+            e.printStackTrace();
         }
+        refreshChart();
     }
     public void close()
     {

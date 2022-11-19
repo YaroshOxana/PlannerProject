@@ -130,4 +130,15 @@ date-picker {
 .dialog-pane:header *.header-panel{
     -fx-background-color: #D6CFC7;
 }
+.chart-bar {
+    -fx-bar-fill: #610000;
+}
+.axis{
+      -fx-tick-label-font-family: "Serif";
+      -fx-tick-label-fill: #610000;
+}
+.chart-plot-background{
+    -fx-background-color: transparent;
+}
+
 
