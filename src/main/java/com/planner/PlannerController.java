@@ -236,12 +236,23 @@ public class PlannerController implements Initializable {
     }
 
     public void deleteTask() {
+        boolean checked = selectedTask.isSelected();
         if (selectedTask == null){
             showDialog("Choose item to delete");
             return;
         }
         tasks.remove(selectedTask);
         refreshTasksListView();
+        if(checked)
+        {
+            Data d = new Data(tasks);
+            try {
+                Data.writeData(d, path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            refreshChart();
+        }
     }
 
     public void refreshTasksListView(){
