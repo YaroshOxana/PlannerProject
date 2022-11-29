@@ -32,9 +32,9 @@
             <JFXButton layoutX="570.0" layoutY="286.0" onAction="#deleteTask" text="Delete" />
             <JFXSlider fx:id="prioritySlider" blockIncrement="1.0" layoutX="472.0" layoutY="435.0" majorTickUnit="1.0" max="5.0" min="1.0" minorTickCount="1" onMouseReleased="#priority" showTickLabels="true" showTickMarks="true" value="5.0" />
             <JFXButton layoutX="570.0" layoutY="589.0" onAction="#close" text="Close" />
-            <JFXButton layoutX="719.0" layoutY="44.0" onAction="#defaultTheme" text="Default" />
-            <JFXButton layoutX="844.0" layoutY="44.0" onAction="#blackTheme" text="Black" />
-            <JFXButton layoutX="965.0" layoutY="44.0" onAction="#whiteTheme" text="White" />
+            <JFXButton layoutX="960.0" layoutY="44.0" onAction="#defaultTheme" text="Default" />
+            <JFXButton layoutX="1085.0" layoutY="44.0" onAction="#blackTheme" text="Black" />
+            <JFXButton layoutX="1205.0" layoutY="44.0" onAction="#whiteTheme" text="White" />
             <DatePicker fx:id="datePicker" layoutX="454.0" layoutY="48.0" onAction="#changeDate" />
             <JFXDialog fx:id="jfxDialog" />
          </children>
